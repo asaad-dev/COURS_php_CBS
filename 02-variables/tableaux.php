@@ -1,3 +1,5 @@
+<?php require_once '../inc/functions.php';?>
+
 <!doctype html>
 <html lang="en">
 
@@ -31,8 +33,10 @@
         <div class="row">
             <div class="col-sm-12">
                 <h2>1- Les tableaux</h2>
-                <p>texte à venir</p>
+                <p>Un tableau applé array en anglais est une variable améliorée dans laquelle on stocke une multitude de valeurs. Ces valeurs peuvent être de n'importe quel type. Elles possdent un indice dont la numérotation commence à 0.</p>
                 <blockquote>
+                    <p>déclaérer un tableau, les valeurs du tableau sont indiqués dans les ()</p>
+                    <code>$tableau1 = array("Dalio", "Gabin", "Arlety", "Fernandel", "Pauline Carton");</code>
 
                 </blockquote>
                 <?php 
@@ -43,13 +47,85 @@
                     $tab[] = "coucou"; // il mettra 36 : avntage ajouter un élément à la fin d'un tableau sans connaître la valeur du premier indice disponible
 
                     echo "Nombre d'éléments du tableaux ". count($tab);
-
                     echo "<hr><p> La langage préféré de l'open source est $tab[2] <br>";
                     echo "Utilisez $tab[35]</p>";
+
+                    // jeVarDump($tab);
+                    // jePrintr($tab);
+                    
+                    // echo "<pre>";
+                    // print_r($tab);
+                    // echo "</pre>";
                 ?>
             </div>
 
-            <div class="col-sm12"></div>
+            <div class="col-sm-12 col-md-6">
+                <h2>Les tableaux associatifs</h2>
+                <p>Dans un tableau associatif nous pouvons choisir le nom des indices ou des index, c'est-à-dire que nous asscions un indice crée par nous à sa valeur</p>
+
+            <?php
+
+                $couleurs = array(
+                    'b' => 'bleu',
+                    'b1' => 'blanc',
+                    'r' => 'rose',
+                );
+
+                jeVarDump($couleurs);
+                //pour afficher une valeur de notre tableau associatif
+                echo '<p> La première couleur du tableau est' .$couleurs['b']. '</p>';  // dans des quotes il prend des quotes autour de son indice 
+                echo "<p> La première couleur du tableau est $couleurs[b]</p>"; //dans des guillemets il y a une exception, l'indice ne prend plus de quotes ... VOIR
+
+                //mini exo compter le nombre d'élément du tableau
+                echo "Nombre d'éléments dans le tableau \$couleurs : " .count($couleurs). "</p>";
+                echo "Nombre d'éléments dans le tableau \$couleurs : " .sizeof($couleurs). "</p>";
+            ?>
+            </div>
+
+            
+            <div class="col-sm-12 col-md-6">
+                <h2>Les tableaux multi-dimensionnels</h2>
+                <p>Un tableau mutli-dimensionne est un tableau qui contiendra une suite de tableau. Chaque tableau présente une "dimension".</p>
+
+                <?php
+                    $tableau_multi = array(
+                        0 => array(
+                            'prenom' => 'Jean',
+                            'nom' => 'Dujardin',
+                            'telephone' => '01 25 26 36 99'
+                        ),
+                        1 => array(
+                            'prenom' => 'Alexandra',
+                            'nom' => 'Lamy',
+                            'telephone' => '01 25 26 36 99'
+                        ),
+                        2 => array(
+                            'prenom' => 'John',
+                            'nom' => 'Wayne',
+                            'telephone' => '01 25 26 36 99'
+                        ),
+                    );
+
+                    jeVarDump($tableau_multi);
+
+                    //echo "Jean"
+                    echo $tableau_multi[0]['prenom']. "<hr>"; //pour afficher Jean on entre d'bord l'indice 0 puis dans le sou-tableau on va à l'indice prenom
+
+                    //pour parcourir le tableau multi-dimensioonel on peut faire une boucle for car ses indices sont numériques
+                    echo "<ul>";
+                    for ($i=0; $i < count($tableau_multi); $i++) {
+                        echo "<li>".$tableau_multi[$i]['prenom']. " " .$tableau_multi[$i]['nom']. "</li>";
+                    }
+                    echo "</ul>";
+
+
+                    echo M_PI;
+                   
+
+
+                ?>
+            </div>
+            <!-- fin col -->
            
         </div>
         <!-- fin row -->
