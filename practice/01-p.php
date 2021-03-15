@@ -26,13 +26,16 @@
          * Multi-dimennsional - Arrays containing one or more arrays
          */
 
-        // 1- array(); function is used to create an array
-        // 2- count(); function is used to get the length of an array
+        // # array(); or [] function is used to create an array
+        // # count(); function is used to get the length of an array
 
 
-        // Indexed
+        //  1- Indexed
         //the index can be assigned automatically(index always starts at à):
         $cars = array("Volvo", "BMW", "Toyota");
+        $price = ["Honda", "Ford"];
+        var_dump ($price);
+      
         //or the index can be assigned manually :
         $cars[0] = "Volvo";
         $cars[1] = "BMW";
@@ -45,6 +48,42 @@
           echo "<br>";
         }
 
+        // 2- Associative arrays
+        //Are arrays that use named keys that you assign to them
+        $age = array("Peter"=>"35", "Ben"=>"37", "Joe"=>"40");
+        //or
+        $age["Peter"] = "35";
+        $age["Ben"] = "37";
+        $age["Joe"] = "40";
+
+        echo "Peter is " .$age["Peter"] . " years old.";
+
+        /**
+         *  Loop through an associative array
+         * FOREACH
+         */
+        foreach($age as $x => $x_value) {
+          echo "Key=" .$x. ", Value=" .$x_value;
+          echo "<br>";
+        }
+
+        //  3- Multidimensional arrays
+        //a multidimensional array containing one or more arrays.
+        $cars2 = array(
+          array("Volvo", 22,18),
+          array("BMW", 15,13),
+          array("Saab", 5,2),
+          array("Land Rover",17,15)
+        );
+        
+        for ($row = 0; $row < 4; $row++) {
+          echo "<p><b>Row number $row</b></p>";
+          echo "<ul>";
+          for ($col = 0; $col < 3; $col++) {
+            echo "<li>".$cars2[$row][$col]."</li>";
+          }
+          echo "</ul>";
+        }
 
         //array with table
         echo "<hr>";
