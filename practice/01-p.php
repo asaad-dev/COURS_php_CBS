@@ -31,7 +31,7 @@
 
 
         //  1- Indexed
-        //the index can be assigned automatically(index always starts at à):
+        //the index can be assigned automatically(index always starts at 0):
         $cars = array("Volvo", "BMW", "Toyota");
         $price = ["Honda", "Ford"];
         var_dump ($price);

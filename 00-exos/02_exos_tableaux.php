@@ -135,10 +135,44 @@
                                 break ;
                          }
                      }
+                     echo "<hr>";
+
+                     /**
+                      * Mardi 16/03/2021
+                    */
+
+                    //1 - EXo faire un tableau $tailles avec des tailles de vêtements du small au xl et les afficher avec une boucle foreach dans une ul
+                    //2 - puis les afficher dans un select avec une boucle foreach
+
+                    $tailles = array('S', 'M', 'X', 'XL');
+                    echo "<ul>";
+                    foreach ($tailles as $indice => $size) {
+                    echo "<li>$size </li>";
+                    }
+                    echo "</ul>";
 
 
+                    //avec select
+                    echo "<select class=\"form-control w-25\">";
+                    foreach ($tailles as $indice => $size) {
+                    echo "<option>$size</option>";
+                    }
+                    echo "</select>";
 
+                    //tableau associatif
+                    $tailles2 = [
+                        's' => 'small',
+                        'm' => 'medium',
+                        'l' => 'large',
+                        'xl' => 'extra-large',
+                    ];
 
+                     //avec select
+                     echo "<label for=\"tailles\">Tailles</label><select class=\"form-control w-25 mb-4\">";
+                     foreach ($tailles as $indice => $size) {
+                     echo "<option value=\"$indice\">" .$size. "</option>";
+                     }
+                     echo "</select>";
                 ?>
             </div>
 
@@ -150,19 +184,6 @@
         <!-- fin row -->
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-       
 
     </main>
     <!-- fin container -->

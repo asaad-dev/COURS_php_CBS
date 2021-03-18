@@ -18,7 +18,7 @@
 
     //création d'une fonction pour "var_dump" une varialble (très utile pour un tableau)
     function jeVarDump($maVariable) { //la fonction nommée avec son paraétre, une variable
-        echo "<pre>";
+        echo "<pre><span class=\"bg-danger text-white p-2\">..var_dump</span>";
         echo "<p class=\"alert alert-success p-2 w-50\">";
         var_dump($maVariable); //une variable à laquelle on applique la fonction var_dump
         echo "</p></pre>";
@@ -26,7 +26,7 @@
 
     //création d'une fonction pour "print_r" une varialble (très utile pour un tableau)
     function jePrintr($maVariable) { //la fonction nommée avec son paraétre, une variable
-        echo "<pre>";
+        echo "<pre><span class=\"bg-danger text-white p-2\">..print_r</span>";
         echo "<p class=\"alert alert-warning p-2 w-50\">";
         print_r($maVariable); //une variable à laquelle on applique la fonction print_r
         echo "</p></pre>";
