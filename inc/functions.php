@@ -19,7 +19,7 @@
     //création d'une fonction pour "var_dump" une varialble (très utile pour un tableau)
     function jeVarDump($maVariable) { //la fonction nommée avec son paraétre, une variable
         echo "<pre><span class=\"bg-danger text-white p-2\">..var_dump</span>";
-        echo "<p class=\"alert alert-success p-2 w-50\">";
+        echo "<p class=\"alert alert-success p-2 \">";
         var_dump($maVariable); //une variable à laquelle on applique la fonction var_dump
         echo "</p></pre>";
     }
