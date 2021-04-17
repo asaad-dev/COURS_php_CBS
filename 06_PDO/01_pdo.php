@@ -9,6 +9,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
+   <!-- Font awesome -->
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
     <title>Cours PHP 7 - PDO</title>
     <!-- CSS -->
     <link rel="stylesheet" href="../css/style.css">
@@ -23,14 +26,12 @@
         <p class="lead">La variable "$pdo" est un objet qui représente la connexion à une BDD</p> 
         <hr class="my-4">
     </div>
-
     <!-- ============= Contenu principal ============ -->
-
     <main class="container-md">
         <div class="row">
             <div class="col-sm-12 col-md-4">
-                <h2>1- Connexion à la BDD</h2>
-                <p><abbr title="PHP data objet">PDO</abbr>est l'acronyme de PHP Data Object</p>
+                <h3>1- Connexion à la BDD</h3>
+                <p><abbr title="PHP data objet">PDO</abbr> est l'acronyme de <code>PHP Data Object</code></p>
                 <p><code>PDO_MYSQL</code> est un pilote qui implémente l'interface de PHP Data Objects (PDO) pour autoriser l'accès de PHP aux bases de données MySQL. PDO_MYSQL utilises des requêtes préparées émulées par défaut.</p>
                 <?php
                     $pdoENT = new PDO('mysql:host=localhost;dbname=entreprise', //on a en premier lieu le driver mysql (IBM, ORACLE, OBC ...), le no du serveur, le nom de la BDD
@@ -39,7 +40,6 @@
                     array(
                         PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING, //cette ligne sert à afficher les erreurs SQL dans le navigateur
                         PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', //pour définir le charset des échanges avec la BDD
-
                      ));
 
                     /***
@@ -56,36 +56,31 @@
 
                     jeVarDump($pdoENT); //l'objet est vide car il n'y a pas de propriéités
                     jeVarDump(get_class_methods ($pdoENT)); //permet d'afficher la liste des méthodes présentes dans l'objet PDO
-
                 ?>
-            
             </div>
             <!-- fin col -->
                
             <div class="col-sm-12 col-md-4">
-                <h2>2- Faire des réquêtes avec exec()</h2>
+                <h3>2- Faire des réquêtes avec exec()</h3>
                 <p>La méthode <code>exec()</code> est utilisée pour faire des requêtes qui retournent pas de résultats : INSERT, UPDATE, DELETE</p>
                 <p>Valeurs de retours : <br>
                 Succés : dans le jeVarDump de $requete on aura le nombre de lignes affectées par la requête, 3 delete = integer(3),  <br>
                 Echo : false = 0
                 </p>
                 <?php
-                    //on va insérer un employé dans la BDD
-                    // requête SQL d'insertion dans la BDD dans la table employes
-                    //INSERT INTO employes (prenom, nom, sexe, service, date_embache, salary) VALUES ('Jean', 'Bon', 'm', 'informatique', '2021-03-18', 2000)
+                  //on va insérer un employé dans la BDD
+                  //requête SQL d'insertion dans la BDD dans la table employes
 
-                    //$requete = $pdoENT->exec( "INSERT INTO employes (prenom, nom, sexe, service, date_embauche, salaire) VALUES ('Jean', 'Bon', 'm', 'informatique', '2021-03-18', 2000)" );
+                  $requete = $pdoENT->exec( "INSERT INTO employes (prenom, nom, sexe, service, date_embauche, salaire) VALUES ('Jean', 'Bon', 'm', 'informatique', '2021-03-18', 2000)" );
 
-                    //  $requete = $pdoENT->exec("DELETE FROM employes WHERE prenom='Jean' AND nom='Bon'");
-                    //  jeVarDump($requete);
-
-                    // echo "Dernier id générée en BDD : " .$pdoENT->LastInsertId();
+                  $requete = $pdoENT->exec("DELETE FROM employes WHERE prenom='Jean' AND nom='Bon'");
+                  jeVarDump($requete);
+                  echo "Dernier id générée en BDD : " .$pdoENT->LastInsertId();
                 ?>
-           
             </div>
             <!-- fin col -->
             <div class="col-sm-12 col-md-4">
-               <h2>3- Faire des requêtes avec <code>query()</code></h2>
+               <h3>3- Faire des requêtes avec <code>query()</code></h3>
                <p><code>query()</code> est utilisé pour faire des requêtes qui retournent un ou plusieur résultats :SELECT mais aussi DELETE, UPDATE et INSERT</p>
                <p>Succés : query () retourne un nouvel objet qui provint de la calsse PDO statement.
                    <br>
@@ -98,67 +93,59 @@
                </ul>
 
                <?php
-               //1- on demande des information à la BDD car il y a un ou plusieurs résultats avec query()
-                // $requete = $pdoENT->query( "SELECT * FROM employes WHERE prenom= 'Amandine' ");
-                $requete = $pdoENT->query( "SELECT * FROM employes WHERE id_employes= '417' ");
+                  //1- on demande des information à la BDD car il y a un ou plusieurs résultats avec query()
+                  // $requete = $pdoENT->query( "SELECT * FROM employes WHERE prenom= 'Amandine' ");
+                  $requete = $pdoENT->query( "SELECT * FROM employes WHERE id_employes= '417' ");
+                  // jeVarDump($requete);
 
-                // jeVarDump($requete);
+                  //2- dans cet objet $requete nous ne voyons pas encore les doonées concernant amandine. Pourtant elles s'y trouvent. Pour y accéder nous devons sutiliser une méthode de $requete qui s'appelle fetch() 
+                  
+                  $ligne = $requete ->fetch( PDO ::FETCH_ASSOC );
+                  //3- avec cette méthode fetch() on transforme l'object $requete
+                  //4- fectch(), avec le paramétre PDO:: FETCH_ASSOS permet de transformer l'objet $requete en un array associatif appelé ici $ligne : on y trouve en indice le nom des champs de la réquêtes SQL
+                  jeVarDump($ligne);
 
-                //2- dans cet objet $requete nous ne voyons pas encore les doonées concernant amandine. Pourtantelles s'y trouvent.Pour y accéder nous devon sutiliser une méthode de $requete qui s'appelle fetch() 
-                
-                $ligne = $requete ->fetch( PDO ::FETCH_ASSOC );
-                //3- avec cette méthode fetch() on transforme l'object $requete
-                //4- fectch(), avec le paramétre PDO:: FETCH_ASSOS permet de transformer l'objet $requete en un array associatif appelé ici $ligne : on y trouve en indice le nom des champs de la réquêtes SQL
-                jeVarDump($ligne);
-
-                echo "<p>Nom : " .$ligne['prenom']. " " .$ligne['nom']. "/<p>";
-                echo "<p>Service : " .$ligne['service']. " " .$ligne['date_embauche']. " " .$ligne['salaire']. " €" ."</p>";
-     
-
-                /**
-                 * Vendredi 19/03/2021
-                 */
-                //EXO : afficher le service de l'emloyé dant l'id est 417 et son nom et son prénom
-                // $ligne = $requete->fetch(PDO::FETCH_ASSOC);
-                echo "<ul class=\"alert alert-warning\">";
-                echo "<p>Id employe : " .$ligne['id_employes']. "</p>";
-                echo "<p>Nom : " .$ligne['nom']. " " .$ligne['prenom']. "</p>";
-                echo "</ul>";
+                  echo "<h5>Nom : " .$ligne['prenom']. " " .$ligne['nom']. "</h5>";
+                  echo "<p>Service : " .$ligne['service']. "<br> ". "Date d'embauche :" .$ligne['date_embauche']. " <br>". "Salaire :" .$ligne['salaire']. " €" ."</p>";
+      
+                  //EXO : afficher le service de l'emloyé dant l'id est 417 et son nom et son prénom
+                  // $ligne = $requete->fetch(PDO::FETCH_ASSOC);
+                  echo "<ul class=\"alert alert-warning \">";
+                  echo "<li>Id employe : " .$ligne['id_employes']. "</li>";
+                  echo "<li>Nom : " .$ligne['nom']. " " .$ligne['prenom']. "</li>";
+                  echo "</ul>";
                 ?>
-
-                
             </div>
             <!-- fin col -->
-            <div class="col-12-">
-                <h2>04- Faire des requêtes avec <code>query()</code> et afficher plusieurs résultats</h2>
+            <div class="col-sm-12 col-md-">
+                <h3>04- Faire des requêtes avec <code>query()</code> et afficher plusieurs résultats</h3>
                 <?php
                     // SELECT * FROM employes
                     $requete = $pdoENT->query("SELECT * FROM employes");
                     jeVarDump($requete);
                     $nbr_employes = $requete->rowCount(); //cette méthode rowCount() permet de compter le nbr de rangées (d'enregistrements) retournés par la requête
                     // jeVarDump($nbr_employes);
-                    echo "<p>Il y a " .$nbr_employes. " employe=és dans la base.</p>";
+                    echo "<h5>Il y a " .$nbr_employes. " employés dans la base.</h5>";
                     //comme nous avons plusieurs résultats dans $requete nous devons faire une boucle pour les parcourir 
-                    //fetch() va chercher la ligne suivante au jeu de résultat àchaque tour de boucle, et le tranforme en object. La boucle while permet de faire avancer le curseur dans l'objet. Quand à la fin, fetch() retoune FALSE et la boucle s'arrête
+                    //fetch() va chercher la ligne suivante au jeu de résultat à chaque tour de boucle, et le tranforme en object. La boucle while permet de faire avancer le curseur dans l'objet. Quand à la fin, fetch() retoune FALSE et la boucle s'arrête
                     while ($ligne = $requete->fetch(PDO ::FETCH_ASSOC)) {
                         // jeVarDump();
                         echo "<p>Nom : " .$ligne['prenom']. " " .$ligne['nom']. " travaille au service : " .$ligne['service']. "</p>";
                     }
                     echo "<hr>";
 
-
                     //EXO : afficher la liste des différents services dans une ul en mettant un service pas li
-                     //$requete = $pdoENT->query("SELECT DISTINCT (service) FROM employes ORDER BY service");
+                     $requete = $pdoENT->query("SELECT DISTINCT (service) FROM employes ORDER BY service");
                     $nbr_services = $requete->rowCount();
             
-                    echo "<p>Il y a " .$nbr_services. " service dans la société.";
+                    echo "<p>Il y a " .$nbr_services. " service dans la société.</p>";
                     echo "<ul>";
                     while ($ligne = $requete->fetch(PDO ::FETCH_ASSOC)) {
                          //  jeVarDump($requete);
-                         echo "<li>Service : " .$ligne['service']. " " .$ligne['service']. " " .$ligne['date_embauche']. " " .$ligne['salaire']. " €" ."</li>";
+                         echo "<li>Service : " .$ligne['service']."</li>";
                      }
                      echo "</ul>";
-                     echo "<hr>"
+                     echo "<hr>";
                 ?>
             </div>
             <!-- fin col -->
@@ -189,6 +176,7 @@
                     echo "</tr>";
                     echo "</thead>";
        
+                    //avec while
                     while ($ligne = $requete->fetch(PDO ::FETCH_ASSOC)) {                        
                         echo "<tr>";
                         echo "<td>". $ligne['id_employes']. "</td>";
@@ -204,7 +192,7 @@
                         echo "<td>" .$ligne['prenom']. "</td>";
                         echo "<td>" .$ligne['sexe']. "</td>";
                         echo "<td>" .$ligne['service']. "</td>";
-                        //ici on demande strftime(')
+                        //ici on demande strftime()
                         echo "<td>" .date('d/m/Y', strtotime($ligne['date_embauche'])). " </td>";
                         // echo "<td>" .$ligne['date_embauche']. "</td>";
                         $format_francais = number_format($ligne['salaire'], 2, " , ", " ");
@@ -213,46 +201,14 @@
                     }
                     echo "</table>";
 
-                    /**
-                     *  PISOLA
-                     * 
-                     */
-                    // echo "<table class=\"table table-primary table-striped\">";
-                    // echo "<thead>";
-                    // echo "<tr>";
-                    // echo "<th>ID</th>";
-                    // echo "<th>Nom, prénom</th>";
-                    // // echo "<th>Sexe</th>";
-                    // echo "<th>Service</th>";
-                    // echo "<th>Date d'entrée</th>";
-                    // echo "<th>Salaire mensuel</th>";
-                    // echo "</tr>";
-                    // echo "</thead>";
-                    // while ( $employe = $requete->fetch( PDO::FETCH_ASSOC )) {
-                    //     echo "<tr>";
-                    //     echo "<td>" .$employe['id_employes']. " </td>";
-                    //     if ( $employe['sexe'] == 'f') {
-                    //     echo "<td> Mme " .$employe['nom']. " " .$employe['prenom']. "</td>"; 
-                    //     } else {
-                    //     echo "<td> M. " .$employe['nom']. " " .$employe['prenom']. "</td>"; 
-                    //     }            
-                    //     // echo "<td>" .$employe['sexe']. " </td>";
-                    //     echo "<td>" .$employe['service']. " </td>";
-                    //     echo "<td>" .$employe['date_embauche']. " </td>";
-                    //     echo "<td>" .$employe['salaire']. " €</td>";
-                    //     echo "</tr>";
-                    // }
-                    // echo "</table>";
-
-                    /**
-                    * Lundi 22/03/2021
-                    */
+                    #######################################
                     // ou avec foreach
                     echo "<table class=\"table table-success table-striped\">";
                     foreach ( $pdoENT->query( " SELECT * FROM employes ORDER BY sexe DESC, nom ASC " ) as $infos ) { //$employe étant un tableau on peut le parcourir avec une foreach. La variable $infos prend les valeurs successivement à chaque tour de boucle
                     // jevardump($infos);
                     echo "<tr>";
                     echo "<td>";
+                    //condition
                     if ( $infos['sexe'] == 'f') {
                         echo "<span class=\"badge badge-secondary\">Mme ";
                     } else {
@@ -271,14 +227,14 @@
             </div>
             <!-- fin col -->
             <div class="col-sm-12">
-                <h2>05-Requêtes préparées avec <span class="text text-danger">prepare( )</span></h2>
+                <h3>05-Requêtes préparées avec <span class="text text-danger">prepare( )</span></h3>
                 <p>Les requêtes préparées sont préconisées si vous exécuter plusieurs fois la même requête, ainsi vous éviterez au SGBD de répéter toutes les phrases, analyses, interprétations exécution etc.. >> on gagne en performance</p>
                 <p>Les requêtes préparées sont utiles pour nettoyer les données et se prémunir des injections de type SQL (tentative de piratage )cf. 09-securite</p>
                 <?php
                     // une requête préparée se réalise en 3 étapes
                     $nom = 'Grand';//ici j'ai l'info que je cherche dans une variable je cherche un résultat ex. je cherche "Grand"
                     // 1/ on prépare la requête
-                    $resultat = $pdoENT->prepare(" SELECT * FROM employes WHERE nom = :nom "); // a/ prepare permet de préparer la requête sans l'exécuter b/:nom est un marqueur qui est vide (comme une boîte vide) et qui attend une valeur c/ $resultat est pour le moment est pour le moment un objet PDOstatement
+                    $resultat = $pdoENT->prepare(" SELECT * FROM employes WHERE nom = :nom "); // a/ prepare permet de préparer la requête sans l'exécuter b/:nom est un marqueur qui est vide (comme une boîte vide) et qui attend une valeur c/ $resultat est pour le moment un objet PDO statement
                     // 2/ on lie le marqueur 
                     $resultat->bindParam( ':nom', $nom );// bindParam permet de lier la marqueur à la variable :nom à une variable $nom on lie les paramètres
                     // $resultat->bindValue( ':nom', 'titi' );// si on a besoin de lier le marqueur à une valeur fixe...

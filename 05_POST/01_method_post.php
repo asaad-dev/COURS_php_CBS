@@ -32,7 +32,6 @@
         <div class="row">
             <div class="col-sm-12 col-md-6">
                 <h5>Formaulaire</h5>
-
                 <ul>
                     <li>Un formulaire doit toujours être dans une balise <code><&#8249;form></code> pour fonctionner.</li>
                     <li>L'attribut "method" indique comment les données vont circuler vers le PHP.</li>
@@ -71,7 +70,7 @@
                     <li>donc ou name1 et nameN correspondent aux attributs "name" du formulaire, et où valeur1 et valeurN correspondent aux valeurs saisies par l'internaute.</li>
                 </ul>
             <?php 
-                if (!empty($_POST)){ // si $_POST n'est pas vide c'est qu'il est rempli et donc que le formulaire a été aenvoyé, notez qu'en l'état on peut l'envoyer avec des champs vides, les valeurs de $_POST étant alore des strings vides? En effet on peut avoir des information non obliigatoires dans un formaulaire et les input ne seront pas remplis 
+                if (!empty($_POST)){ // si $_POST n'est pas vide c'est qu'il est rempli et donc que le formulaire a été aenvoyé, notez qu'en l'état on peut l'envoyer avec des champs vides, les valeurs de $_POST étant alore des strings vides? En effet on peut avoir des information non obligatoires dans un formaulaire et les input ne seront pas remplis 
 
                     //jeVarDump($_POST);
                 echo "<Prenom : <strong>" .$_POST['prenom']. "</strong><br>" ;

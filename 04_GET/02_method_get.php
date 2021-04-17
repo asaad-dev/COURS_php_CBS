@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="../css/style.css">
     
 </head>
-
 <body>
     <!-- navigation en include -->
     <?php require '../inc/nav.inc.php'; ?>
@@ -25,9 +24,7 @@
         <p class="lead">$_GET[ ] représente les données qui transitent par l'URL</p>
         <hr class="my-4">
     </div>
-
     <!-- ============= Contenu principal ============ -->
-
     <main class="container-md">
         <div class="row">
         <div class="col-sm-12">
